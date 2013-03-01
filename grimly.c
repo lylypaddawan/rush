@@ -5,7 +5,7 @@
 ** Login   <lacave_a@epitech.net>
 ** 
 ** Started on  Fri Mar  1 20:44:39 2013 paul-auguste lacave
-** Last update Fri Mar  1 21:28:13 2013 paul-auguste lacave
+** Last update Fri Mar  1 21:29:55 2013 paul-auguste lacave
 */
 
 #include <stdio.h>
@@ -16,7 +16,7 @@ int	check_name(char *name)
   int	a;
 
   a = strlen(name);
-  if (name[a-1] == 'p' && name[a-2] == 'a' && name[a-3] == 'm' && name[a-4] == '.' && name[a-5] != '\0')
+  if (name[a-1] == 'p' && name[a-2] == 'a' && name[a-3] == 'm' && name[a-4] == '.')
     return (1);
   else
     return (0);
