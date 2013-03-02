@@ -5,7 +5,7 @@
 ## Login   <corjon_l@epitech.net>
 ## 
 ## Started on  Fri Mar  1 20:43:06 2013 lysandre corjon
-## Last update Fri Mar  1 23:03:54 2013 paul-auguste lacave
+## Last update Sat Mar  2 18:02:51 2013 lysandre corjon
 ##
 
 
@@ -13,7 +13,7 @@ CC	=	gcc
 
 RM	=	rm -f
 
-CFLAGS	=	-Wall -Wextra
+CFLAGS	=	-g -g3 -Wall -Wextra
 
 NAME	=	grimly
 

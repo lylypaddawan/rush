@@ -5,7 +5,7 @@
 ** Login   <corjon_l@epitech.net>
 ** 
 ** Started on  Fri Mar  1 22:43:09 2013 lysandre corjon
-** Last update Sat Mar  2 17:35:17 2013 lysandre corjon
+** Last update Sat Mar  2 18:08:44 2013 lysandre corjon
 */
 
 #ifndef GRIMLY_H_
@@ -16,7 +16,7 @@
 typedef struct	s_info
 {
   int		width;
-  int		height;
+  int		heigth;
 }		t_info;
 
 typedef struct	s_ll
@@ -25,7 +25,7 @@ typedef struct	s_ll
   struct s_ll	*next;
 }		t_ll;
 
-char    **put_ll_to_tab(int count, char **tab, t_ll *list);
+char    **put_ll_to_tab(t_info **info, int count, char **tab, t_ll *list);
 int	is_file(char *str);
 int	tab_len(char **tab);
 void	free_list(t_ll *list);

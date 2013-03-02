@@ -5,7 +5,7 @@
 ** Login   <corjon_l@epitech.net>
 ** 
 ** Started on  Fri Mar  1 20:54:16 2013 lysandre corjon
-** Last update Sat Mar  2 17:36:08 2013 lysandre corjon
+** Last update Sat Mar  2 18:09:03 2013 lysandre corjon
 */
 
 #include <sys/types.h>
@@ -63,7 +63,7 @@ t_info	**get_tall(char *str, t_info **info)
       i++;
     }
   (*info)->width = atoi(str);
-  (*info)->height = atoi(&str[++i]);
+  (*info)->heigth = atoi(&str[++i]);
   while (str[i])
     {
       if (str[i] < '0' || str[i] > '9')
@@ -105,15 +105,28 @@ t_ll	*feel_ll(t_ll *file, char *str)
   return (file);
 }
 
-char	**put_ll_to_tab(int count, char **tab, t_ll *file)
+char	**put_ll_to_tab(t_info **info, int count, char **tab, t_ll *file)
 {
+  if ((count - 1) != (*info)->heigth)
+    {
+      my_perror("MAP ERROR\n");
+      return (NULL);
+    }
   if ((tab = malloc((count) * sizeof(*tab))) == NULL)
-    return (NULL);
+    {
+      my_perror("Malloc Fail\n");
+      return (NULL);
+    }
   tab[count - 1] = NULL;
   count = 0;
   while (file != NULL)
     {
       tab[count++] = file->data;
+      if (strlen(file->data) != (*info)->width)
+	{
+	  my_perror("MAP ERROR\n");
+	  return (NULL);
+	}
       file = file->next;
     }
   free_list(file);
@@ -142,7 +155,7 @@ char	**get_file_in_tab(int fd, t_info **info)
       free(str);
       count++;
      }
-  if ((tab = put_ll_to_tab(count, tab, file)) == NULL)
+  if ((tab = put_ll_to_tab(info, count, tab, file)) == NULL)
     return (NULL);
   return (tab);
 }
