@@ -5,7 +5,7 @@
 ## Login   <corjon_l@epitech.net>
 ## 
 ## Started on  Fri Mar  1 20:43:06 2013 lysandre corjon
-## Last update Sat Mar  2 18:02:51 2013 lysandre corjon
+## Last update Sat Mar  2 20:30:07 2013 lysandre corjon
 ##
 
 
@@ -20,6 +20,7 @@ NAME	=	grimly
 SRC	=	grimly.c \
 		check_file.c \
 		get_next_line.c \
+		tools.c \
 		my_perror.c
 
 OBJ	=	$(SRC:.c=.o)

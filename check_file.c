@@ -5,7 +5,7 @@
 ** Login   <corjon_l@epitech.net>
 ** 
 ** Started on  Fri Mar  1 20:54:16 2013 lysandre corjon
-** Last update Sat Mar  2 18:09:03 2013 lysandre corjon
+** Last update Sat Mar  2 21:08:12 2013 lysandre corjon
 */
 
 #include <sys/types.h>
@@ -17,63 +17,25 @@
 #include <stdlib.h>
 #include "grimly.h"
 
-int	is_file(char *str)
+int	check_tab(char **tab, t_info **info)
 {
-  if (access(str, F_OK) != 0)
-    return (-1);
-  if (access(str, R_OK) != 0)
-    return (-1);
+  int	x;
+  int	y;
+
+  for (y = 0; y < (*info)->heigth; y++)
+    {
+      for (x = 0; x < (*info)->width; x++)
+	{
+	  if (x == 0 || x == ((*info)->width - 1) || y == 0 || y == ((*info)->heigth - 1))
+	    {
+	      if (tab[y][x] != '1' && tab[y][x] != '2' && tab[y][x] != '*')
+		return (-2);
+	    }
+	  if (tab[y][x] != '1' && tab[y][x] != '2' && tab[y][x] != ' ' && tab[y][x] != '*')
+	    return (-1);
+	}
+    }
   return (0);
-}
-
-int	tab_len(char **tab)
-{
-  int	i;
-
-  i = 0;
-  while (tab[i] != NULL)
-    i++;
-  return (i);
-}
-
-void	free_list(t_ll *list)
-{
-  t_ll	*tmp;
-
-  while (list != NULL)
-    {
-      tmp = list;
-      list = list->next;
-      free(tmp);
-    }
-}
-
-t_info	**get_tall(char *str, t_info **info)
-{
-  int	i;
-
-  i = 0;
-  while (str[i] != 'x')
-    {
-      if (str[i] < '0' || str[i] > '9')
-	{
-	  my_perror("MAP ERROR\n");
-	  return (NULL);
-	}
-      i++;
-    }
-  (*info)->width = atoi(str);
-  (*info)->heigth = atoi(&str[++i]);
-  while (str[i])
-    {
-      if (str[i] < '0' || str[i] > '9')
-	{
-	  my_perror("MAP ERROR\n");
-	  return (NULL);
-	}
-      i++;
-    }
-  return (info);
 }
 
 t_ll	*feel_ll(t_ll *file, char *str)
@@ -122,7 +84,7 @@ char	**put_ll_to_tab(t_info **info, int count, char **tab, t_ll *file)
   while (file != NULL)
     {
       tab[count++] = file->data;
-      if (strlen(file->data) != (*info)->width)
+      if ((int)strlen(file->data) != (*info)->width)
 	{
 	  my_perror("MAP ERROR\n");
 	  return (NULL);
@@ -177,6 +139,11 @@ char	**check_file(char *str, t_info **info)
      }
   if ((tab = get_file_in_tab(fd, info)) == NULL)
     return (NULL);
+  if (check_tab(tab, info) != 0)
+    {
+      my_perror("MAP ERROR\n");
+      return (NULL);
+    }
   if (close(fd) != 0)
     {
       my_perror("fclose error\n");

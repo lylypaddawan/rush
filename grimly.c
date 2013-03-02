@@ -5,7 +5,7 @@
 ** Login   <lacave_a@epitech.net>
 ** 
 ** Started on  Fri Mar  1 20:44:39 2013 paul-auguste lacave
-** Last update Sat Mar  2 19:16:24 2013 paul-auguste lacave
+** Last update Sat Mar  2 21:03:04 2013 lysandre corjon
 */
 
 #include <stdlib.h>
@@ -24,9 +24,19 @@ int	check_name(char *name)
     return (0);
 }
 
+int	deploy_algo(char **tab, t_info *info)
+{
+  int	i;
+
+  i = 0;
+  while (tab[i] != NULL)
+    printf("%s\n", tab[i++]);
+  printf("width : %d | heigth : %d\n", info->width, info->heigth);
+  return (0);
+}
+
 int	main(int ac, char **av)
 {
-  int		i;
   t_info	*info;
   char		**tab;
   
@@ -43,6 +53,8 @@ int	main(int ac, char **av)
 	    {
 	      if ((tab = check_file(av[2], &info)) == NULL)
 		return (-2);
+	      if (deploy_algo(tab, info) != 0)
+		return (-3);
 	    }
 	  else
 	    {
@@ -50,9 +62,6 @@ int	main(int ac, char **av)
 	      return (-1);
 	    }	  
 	}
-      while (tab[i] != NULL)
-	printf("%s\n", tab[i++]);
-      printf("width : %d | heigth : %d\n", info->width, info->heigth);
     }
   return (0);
 }
