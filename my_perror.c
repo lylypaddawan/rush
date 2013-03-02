@@ -5,10 +5,11 @@
 ** Login   <corjon_l@epitech.net>
 ** 
 ** Started on  Fri Mar  1 22:20:01 2013 lysandre corjon
-** Last update Fri Mar  1 22:23:58 2013 lysandre corjon
+** Last update Sat Mar  2 17:10:37 2013 lysandre corjon
 */
 
 #include <string.h>
+#include <unistd.h>
 
 void	my_perror(char *str)
 {

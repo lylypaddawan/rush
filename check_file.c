@@ -5,7 +5,7 @@
 ** Login   <corjon_l@epitech.net>
 ** 
 ** Started on  Fri Mar  1 20:54:16 2013 lysandre corjon
-** Last update Sat Mar  2 02:47:16 2013 lysandre corjon
+** Last update Sat Mar  2 17:36:08 2013 lysandre corjon
 */
 
 #include <sys/types.h>
@@ -36,15 +36,23 @@ int	tab_len(char **tab)
   return (i);
 }
 
-t_info	**get_tall(int fd, t_info **info)
+void	free_list(t_ll *list)
+{
+  t_ll	*tmp;
+
+  while (list != NULL)
+    {
+      tmp = list;
+      list = list->next;
+      free(tmp);
+    }
+}
+
+t_info	**get_tall(char *str, t_info **info)
 {
   int	i;
-  char	*tmp;
-  char	*str;
 
   i = 0;
-  if ((str = get_next_line(fd)) == NULL)
-    return (NULL);
   while (str[i] != 'x')
     {
       if (str[i] < '0' || str[i] > '9')
@@ -54,32 +62,17 @@ t_info	**get_tall(int fd, t_info **info)
 	}
       i++;
     }
-  if ((tmp = malloc(++i * sizeof(char))) == NULL)
-    {
-      my_perror("Malloc error\n");
-      return (NULL);
-    }
-  tmp[--i] = '\0';
-  i++;
-  while (str[i] != '\0')
-    {
-      if (str[i] < '0' || str[i] > '9')
-	{
-	  my_perror("MAP ERROR\n");
-	  return (NULL);
-	}
-      i++;
-    }
-  i = 0;
-  while (str[i] != 'x')
-    {
-      tmp[i] = str[i];
-      i++;
-    }
-  (*info)->width = atoi(tmp);
+  (*info)->width = atoi(str);
   (*info)->height = atoi(&str[++i]);
-  free(tmp);
-  free(str);
+  while (str[i])
+    {
+      if (str[i] < '0' || str[i] > '9')
+	{
+	  my_perror("MAP ERROR\n");
+	  return (NULL);
+	}
+      i++;
+    }
   return (info);
 }
 
@@ -112,6 +105,21 @@ t_ll	*feel_ll(t_ll *file, char *str)
   return (file);
 }
 
+char	**put_ll_to_tab(int count, char **tab, t_ll *file)
+{
+  if ((tab = malloc((count) * sizeof(*tab))) == NULL)
+    return (NULL);
+  tab[count - 1] = NULL;
+  count = 0;
+  while (file != NULL)
+    {
+      tab[count++] = file->data;
+      file = file->next;
+    }
+  free_list(file);
+  return (tab);
+}
+
 char	**get_file_in_tab(int fd, t_info **info)
 {
   int	count;
@@ -122,8 +130,11 @@ char	**get_file_in_tab(int fd, t_info **info)
   count = 1;
   tab = NULL;
   file = NULL;
-  if ((info = get_tall(fd, info)) == NULL)
+  if ((str = get_next_line(fd)) == NULL)
     return (NULL);
+  if ((info = get_tall(str, info)) == NULL)
+    return (NULL);
+  free(str);
   while ((str = get_next_line(fd)) != NULL)
     {
       if ((file = feel_ll(file, str)) == NULL)
@@ -131,15 +142,8 @@ char	**get_file_in_tab(int fd, t_info **info)
       free(str);
       count++;
      }
-  if ((tab = malloc(count * sizeof(**tab))) == NULL)
+  if ((tab = put_ll_to_tab(count, tab, file)) == NULL)
     return (NULL);
-  tab[count - 1] = NULL;
-  count = 0;
-  while (file->next != NULL)
-    {
-      tab[count++] = file->data;
-      file = file->next;
-    }
   return (tab);
 }
 
@@ -147,20 +151,20 @@ char	**check_file(char *str, t_info **info)
 {
   char	**tab;
   int	fd;
-
+  
   if (is_file(str) != 0)
     {
       my_perror("MAP ERROR\n");
       return (NULL);
     }
   if ((fd = open(str, O_RDONLY)) == -1)
-    {
-      my_perror("MAP ERROR\n");
-      return (NULL);
-    }
+     {
+       my_perror("MAP ERROR\n");
+       return (NULL);
+     }
   if ((tab = get_file_in_tab(fd, info)) == NULL)
     return (NULL);
-   if (close(fd) != 0)
+  if (close(fd) != 0)
     {
       my_perror("fclose error\n");
       return (NULL);
