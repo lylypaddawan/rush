@@ -5,11 +5,13 @@
 ** Login   <lacave_a@epitech.net>
 ** 
 ** Started on  Fri Mar  1 20:44:39 2013 paul-auguste lacave
-** Last update Fri Mar  1 21:29:55 2013 paul-auguste lacave
+** Last update Sat Mar  2 02:48:57 2013 lysandre corjon
 */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "grimly.h"
 
 int	check_name(char *name)
 {
@@ -24,14 +26,22 @@ int	check_name(char *name)
 
 int	main(int ac, char **av)
 {
+  t_info	*info;
+
+  if ((info = malloc(sizeof(*info))) == NULL)
+    {
+      my_perror("Malloc Fail\n");
+      return (-1);
+    }
   if (av[1][0] == '-' && av[1][1] == 'f')
     {
 
       if (check_name(av[2]) == 1)
-	check_file(av[2]);
+	check_file(av[2], &info);
       else
 	printf("Fail name of map !\n");
       
     }
+  printf("width : %d | height : %d\n", info->width, info->height);
   return (0);
 }
