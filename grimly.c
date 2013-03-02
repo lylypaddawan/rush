@@ -5,7 +5,7 @@
 ** Login   <lacave_a@epitech.net>
 ** 
 ** Started on  Fri Mar  1 20:44:39 2013 paul-auguste lacave
-** Last update Sat Mar  2 19:13:06 2013 paul-auguste lacave
+** Last update Sat Mar  2 19:16:24 2013 paul-auguste lacave
 */
 
 #include <stdlib.h>
@@ -39,22 +39,20 @@ int	main(int ac, char **av)
 	}
       if (av[1][0] == '-' && av[1][1] == 'f')
 	{
-	  
 	  if (check_name(av[2]) == 1)
 	    {
 	      if ((tab = check_file(av[2], &info)) == NULL)
 		return (-2);
 	    }
 	  else
-	    printf("Fail name of map !\n");
-	  
+	    {
+	      printf("Fail name of map !\n");
+	      return (-1);
+	    }	  
 	}
-      if (tab[i-1] != NULL)
-	{
-	  while (tab[i] != NULL)
-	    printf("%s\n", tab[i++]);
-	  printf("width : %d | heigth : %d\n", info->width, info->heigth);
-	}
+      while (tab[i] != NULL)
+	printf("%s\n", tab[i++]);
+      printf("width : %d | heigth : %d\n", info->width, info->heigth);
     }
   return (0);
 }
