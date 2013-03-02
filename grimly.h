@@ -5,18 +5,39 @@
 ** Login   <corjon_l@epitech.net>
 ** 
 ** Started on  Fri Mar  1 22:43:09 2013 lysandre corjon
-** Last update Sat Mar  2 18:08:44 2013 lysandre corjon
+** Last update Sat Mar  2 23:06:08 2013 lysandre corjon
 */
 
 #ifndef GRIMLY_H_
 # define GRIMLY_H_
 
 # define	READ_LEN	(35)
+# define	ENTRY		(10)
+# define	EXIT		(20)
+
+typedef struct	s_way
+{
+  void		*data;
+  int		type;
+  int		cur_x;
+  int		cur_y;
+  struct s_way	*next;
+}		t_way;
+
+typedef struct	s_pt
+{
+  int		type;
+  int		x;
+  int		y;
+  t_way		*way;
+  struct s_pt	*next;
+}		t_pt;
 
 typedef struct	s_info
 {
   int		width;
   int		heigth;
+  t_pt		*point;
 }		t_info;
 
 typedef struct	s_ll
@@ -25,6 +46,8 @@ typedef struct	s_ll
   struct s_ll	*next;
 }		t_ll;
 
+int	get_entry(t_info **info, char **tab);
+int	get_info(t_info **info, char **tab);
 char    **put_ll_to_tab(t_info **info, int count, char **tab, t_ll *list);
 int	is_file(char *str);
 int	tab_len(char **tab);

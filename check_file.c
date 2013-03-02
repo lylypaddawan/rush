@@ -5,7 +5,7 @@
 ** Login   <corjon_l@epitech.net>
 ** 
 ** Started on  Fri Mar  1 20:54:16 2013 lysandre corjon
-** Last update Sat Mar  2 21:08:12 2013 lysandre corjon
+** Last update Sat Mar  2 23:18:13 2013 lysandre corjon
 */
 
 #include <sys/types.h>
@@ -29,10 +29,16 @@ int	check_tab(char **tab, t_info **info)
 	  if (x == 0 || x == ((*info)->width - 1) || y == 0 || y == ((*info)->heigth - 1))
 	    {
 	      if (tab[y][x] != '1' && tab[y][x] != '2' && tab[y][x] != '*')
-		return (-2);
+		{
+		  my_perror("MAP ERROR\n");
+		  return (-2);
+		}
 	    }
 	  if (tab[y][x] != '1' && tab[y][x] != '2' && tab[y][x] != ' ' && tab[y][x] != '*')
-	    return (-1);
+	    {
+	      my_perror("MAP ERROR\n");
+	      return (-1);
+	    }
 	}
     }
   return (0);
@@ -139,11 +145,8 @@ char	**check_file(char *str, t_info **info)
      }
   if ((tab = get_file_in_tab(fd, info)) == NULL)
     return (NULL);
-  if (check_tab(tab, info) != 0)
-    {
-      my_perror("MAP ERROR\n");
-      return (NULL);
-    }
+  if (check_tab(tab, info) != 0 || get_info(info, tab) != 0)
+    return (NULL);
   if (close(fd) != 0)
     {
       my_perror("fclose error\n");

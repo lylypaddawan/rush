@@ -5,7 +5,7 @@
 ** Login   <lacave_a@epitech.net>
 ** 
 ** Started on  Fri Mar  1 20:44:39 2013 paul-auguste lacave
-** Last update Sat Mar  2 21:03:04 2013 lysandre corjon
+** Last update Sat Mar  2 23:21:43 2013 lysandre corjon
 */
 
 #include <stdlib.h>
@@ -39,7 +39,7 @@ int	main(int ac, char **av)
 {
   t_info	*info;
   char		**tab;
-  
+
   if (ac == 3)
     {
       if ((info = malloc(sizeof(*info))) == NULL)
@@ -63,5 +63,7 @@ int	main(int ac, char **av)
 	    }	  
 	}
     }
+  else
+    printf("Invalid Number of Parameter\n");
   return (0);
 }

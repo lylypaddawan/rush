@@ -5,12 +5,21 @@
 ** Login   <corjon_l@epitech.net>
 ** 
 ** Started on  Sat Mar  2 20:29:28 2013 lysandre corjon
-** Last update Sat Mar  2 20:32:33 2013 lysandre corjon
+** Last update Sat Mar  2 23:10:36 2013 lysandre corjon
 */
 
 #include <stdlib.h>
 #include <unistd.h>
 #include "grimly.h"
+
+int	get_info(t_info **info, char **tab)
+{
+  if ((*info)->width <= 2 || (*info)->heigth <= 2)
+    return (-1);
+  if (get_entry(info, tab) != 0)
+    return (-2);
+  return (0);
+}
 
 int	is_file(char *str)
 {
