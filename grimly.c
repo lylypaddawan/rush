@@ -5,7 +5,7 @@
 ** Login   <lacave_a@epitech.net>
 ** 
 ** Started on  Fri Mar  1 20:44:39 2013 paul-auguste lacave
-** Last update Sat Mar  2 23:21:43 2013 lysandre corjon
+** Last update Sun Mar  3 03:32:06 2013 lysandre corjon
 */
 
 #include <stdlib.h>
@@ -18,7 +18,7 @@ int	check_name(char *name)
   int	a;
 
   a = strlen(name);
-  if (name[a-1] == 'p' && name[a-2] == 'a' && name[a-3] == 'm' && name[a-4] == '.')
+  if (strcmp(".map", &name[a - 4]) == 0)
     return (1);
   else
     return (0);
@@ -27,11 +27,28 @@ int	check_name(char *name)
 int	deploy_algo(char **tab, t_info *info)
 {
   int	i;
+  t_pt	*point;
 
   i = 0;
+  info->resp = NULL;
   while (tab[i] != NULL)
     printf("%s\n", tab[i++]);
   printf("width : %d | heigth : %d\n", info->width, info->heigth);
+  point = info->point;
+  while (point->next != NULL)
+    {
+      point->map = tab_cpy(tab);
+      point = point->next;
+    }
+  point->map = tab;
+  while (info->resp == NULL)
+    {
+      if (go_algo(info) != 0)
+	{
+	  my_perror("MAP ERROR\n");
+	  return (-1);
+	}
+    }
   return (0);
 }
 
@@ -47,7 +64,7 @@ int	main(int ac, char **av)
 	  my_perror("Malloc Fail\n");
 	  return (-1);
 	}
-      if (av[1][0] == '-' && av[1][1] == 'f')
+      if (strcmp("-f", av[1]) == 0)
 	{
 	  if (check_name(av[2]) == 1)
 	    {
@@ -58,12 +75,15 @@ int	main(int ac, char **av)
 	    }
 	  else
 	    {
-	      printf("Fail name of map !\n");
+	      printf("MAP ERROR\n");
 	      return (-1);
 	    }	  
 	}
     }
   else
-    printf("Invalid Number of Parameter\n");
+    {
+      if (put_usage() != 0)
+	return (-1);
+    }
   return (0);
 }

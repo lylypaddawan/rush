@@ -5,7 +5,7 @@
 ** Login   <corjon_l@epitech.net>
 ** 
 ** Started on  Fri Mar  1 22:43:09 2013 lysandre corjon
-** Last update Sat Mar  2 23:06:08 2013 lysandre corjon
+** Last update Sun Mar  3 03:26:55 2013 lysandre corjon
 */
 
 #ifndef GRIMLY_H_
@@ -29,6 +29,7 @@ typedef struct	s_pt
   int		type;
   int		x;
   int		y;
+  char		**map;
   t_way		*way;
   struct s_pt	*next;
 }		t_pt;
@@ -37,6 +38,7 @@ typedef struct	s_info
 {
   int		width;
   int		heigth;
+  char		*resp;
   t_pt		*point;
 }		t_info;
 
@@ -46,6 +48,8 @@ typedef struct	s_ll
   struct s_ll	*next;
 }		t_ll;
 
+char	**tab_cpy(char **tab);
+int	go_algo(t_info *info);
 int	get_entry(t_info **info, char **tab);
 int	get_info(t_info **info, char **tab);
 char    **put_ll_to_tab(t_info **info, int count, char **tab, t_ll *list);
@@ -63,5 +67,6 @@ char	*get_next_line(const int fd);
 int	check_name(char *name);
 int	main(int ac, char **av);
 void	my_perror(char *str);
+int	put_usage();
 
 #endif /* !GRIMLY_H_ */
