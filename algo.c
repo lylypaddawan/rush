@@ -5,7 +5,7 @@
 ** Login   <corjon_l@epitech.net>
 ** 
 ** Started on  Sun Mar  3 03:24:57 2013 lysandre corjon
-** Last update Sun Mar  3 03:32:20 2013 lysandre corjon
+** Last update Sun Mar  3 03:50:51 2013 lysandre corjon
 */
 
 #include <unistd.h>
@@ -15,12 +15,17 @@
 
 int	go_algo(t_info *info)
 {
-  static int	i = 0;
+  t_pt	*point;
 
-  if (i == 7)
-    info->resp = strdup("caca");
-  printf("lol\n");
-  sleep(1);
-  i++;
+  point = info->point;
+  while (point != NULL)
+    {
+      if (point->type == ENTRY)
+	printf("type : Entry\nx = %d_ny = %d\n\n", point->x + 1, point->y + 1);
+      else if (point->type == EXIT)
+	printf("type : Exit\nx = %d_ny = %d\n\n", point->x + 1, point->y + 1);
+      point = point->next;
+    }
+  info->resp = strdup("caca");
   return (0);
 }
